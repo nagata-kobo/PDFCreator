@@ -76,7 +76,8 @@ extension PDF {
         public override
         func fixContentBounds(in environment: PDF.Environment) {
             super.fixContentBounds(in: environment)
-            guard var contentBounds else {return}
+            guard let contentBounds else {return}
+            var remainingBounds = contentBounds
             switch direction {
             case .vertical:
                 for layout in contentLayouts {
@@ -85,22 +86,22 @@ extension PDF {
                     else {continue}
                     var height = layout.container.size.height.heightValue(for: contentBounds.size, dpi: environment.dpi)
                     guard !height.isNaN else {continue}
-                    if height > contentBounds.height {
-                        height = contentBounds.height
+                    if height > remainingBounds.height {
+                        height = remainingBounds.height
                     }
-                    let width = contentBounds.width
+                    let width = remainingBounds.width
                     let size = CGSize(width: width, height: height)
                     if layout.anchors.contains(.top) {
-                        let origin = contentBounds.origin
+                        let origin = remainingBounds.origin
                         layout.container.bounds = CGRect(origin: origin, size: size)
-                        contentBounds.origin.y += height
-                        contentBounds.size.height -= height
+                        remainingBounds.origin.y += height
+                        remainingBounds.size.height -= height
                     } else if layout.anchors.contains(.bottom) {
-                        let x = contentBounds.origin.x
-                        let y = contentBounds.origin.y + contentBounds.size.height - height
+                        let x = remainingBounds.origin.x
+                        let y = remainingBounds.origin.y + remainingBounds.size.height - height
                         let origin = CGPoint(x: x, y: y)
                         layout.container.bounds = CGRect(origin: origin, size: size)
-                        contentBounds.size.height -= height
+                        remainingBounds.size.height -= height
                     } else {
                         continue
                     }
@@ -115,19 +116,19 @@ extension PDF {
                     if width > contentBounds.width {
                         width = contentBounds.width
                     }
-                    let height = contentBounds.height
+                    let height = remainingBounds.height
                     let size = CGSize(width: width, height: height)
                     if layout.anchors.contains(environment.leftAnchor) {
-                        let origin = contentBounds.origin
+                        let origin = remainingBounds.origin
                         layout.container.bounds = CGRect(origin: origin, size: size)
-                        contentBounds.origin.x += width
-                        contentBounds.size.width -= width
+                        remainingBounds.origin.x += width
+                        remainingBounds.size.width -= width
                     } else if layout.anchors.contains(environment.rightAnchor) {
-                        let x = contentBounds.origin.x + contentBounds.width - width
-                        let y = contentBounds.origin.y
+                        let x = remainingBounds.origin.x + remainingBounds.width - width
+                        let y = remainingBounds.origin.y
                         let origin = CGPoint(x: x, y: y)
                         layout.container.bounds = CGRect(origin: origin, size: size)
-                        contentBounds.size.width -= width
+                        remainingBounds.size.width -= width
                     } else {
                         continue
                     }

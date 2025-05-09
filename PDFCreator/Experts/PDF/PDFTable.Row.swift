@@ -6,8 +6,10 @@
 //  Copyright © 2025 oopers.com. All rights reserved.
 //
 
+import UIKit
+
 extension PDF.Table {
-    
+    /*
     class Row {
         
         var width: PDF.Dimension.Length
@@ -25,7 +27,41 @@ extension PDF.Table {
             self.cells = cells
         }
     }
+     */
+    public
+    class Row: PDF.Stack {
+        
+        public
+        init(
+            size: PDF.Dimension.Size
+        ) {
+            super.init(direction: .horizontal, size: size)
+        }
+        
+        public override
+        func draw(into context: UIGraphicsPDFRendererContext, in environment: PDF.Environment) {
+            super.draw(into: context, in: environment)
+            for layout in contentLayouts {
+                let container = layout.container
+                guard let bounds = container.bounds else {continue}
+                context.stroke(bounds)
+            }
+        }
+    }
+    
+    public
+    class Column: PDF.Stack {
+        
+        public
+        init(
+            size: PDF.Dimension.Size
+        ) {
+            super.init(direction: .vertical, size: size)
+        }
+    }
 }
 
+/*
 extension PDF.Table.Row: PDF.Table.Cell {
 }
+ */

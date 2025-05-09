@@ -66,6 +66,36 @@ class ViewController: UIViewController {
             ),
             fromEnd: true
         )
+        let rowSize = PDF.Dimension.Size(
+            width: .relative(1.0),
+            height: .absolute(.point(26))
+        )
+        let row = PDF.Table.Row(size: rowSize)
+        let col1Size = PDF.Dimension.Size(
+            width: .relative(0.1),
+            height: .relative(1.0)
+        )
+        let col1 = PDF.Table.Column(size: col1Size)
+        row.add(col1)
+        let col2Size = PDF.Dimension.Size(
+            width: .relative(0.2),
+            height: .relative(1.0)
+        )
+        let col2 = PDF.Table.Column(size: col2Size)
+        row.add(col2)
+        let col3Size = PDF.Dimension.Size(
+            width: .relative(0.3),
+            height: .relative(1.0)
+        )
+        let col3 = PDF.Table.Column(size: col3Size)
+        row.add(col3)
+        let col4Size = PDF.Dimension.Size(
+            width: .relative(0.4),
+            height: .relative(1.0)
+        )
+        let col4 = PDF.Table.Column(size: col4Size)
+        row.add(col4)
+        page.pageContent.add(row)
         return [page]
     }
 }

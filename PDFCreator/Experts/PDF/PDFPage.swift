@@ -25,7 +25,8 @@ extension PDF {
             topPadding: PDF.Dimension.Length = .absolute(.point(0)),
             bottomPadding: PDF.Dimension.Length = .absolute(.point(0))
         ) {
-            self.content = Self.createPageContent()
+            let pageStack = Self.createPageContent()
+            self.content = pageStack
             
             super.init(
                 size: size,
@@ -34,6 +35,8 @@ extension PDF {
                 topPadding: topPadding,
                 bottomPadding: bottomPadding
             )
+            
+            pageStack.parent = self
         }
 
         public override
@@ -41,6 +44,9 @@ extension PDF {
             into context: UIGraphicsPDFRendererContext,
             in environment: PDF.Environment
         ) {
+            fixContentBounds(in: environment)
+            guard let contentBounds else {return}
+            print("***", contentBounds)
             environment.push(content)
             content.draw(into: context, in: environment)
             environment.pop()
@@ -56,7 +62,6 @@ extension PDF {
         
         public static
         func createPageContent() -> Container {
-            
             return Stack(
                 size: .parentContentSize
             )

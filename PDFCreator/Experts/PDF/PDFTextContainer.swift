@@ -57,6 +57,7 @@ extension PDF {
             nsText.draw(in: contentBounds, withAttributes: attributes)
             //For debugging
             context.stroke(contentBounds)
+            dump(contentBounds)
         }
         
         private func createParagraphStyle() -> NSParagraphStyle {

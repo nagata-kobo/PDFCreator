@@ -39,7 +39,13 @@ class ViewController: UIViewController {
     }
     
     private func createPDFPages() -> [PDF.Page] {
-        let page = PDF.Page.a4portrait
+        let page = PDF.Page(
+            size: .a4portrait,
+            leftPadding: .absolute(.millimeter(10)),
+            rightPadding: .absolute(.millimeter(10)),
+            topPadding: .absolute(.millimeter(10)),
+            bottomPadding: .absolute(.millimeter(10))
+        )
         let textSize = PDF.Dimension.Size(
             width: .relative(1.0),
             height: .absolute(.point(26))

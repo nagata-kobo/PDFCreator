@@ -2,7 +2,7 @@
 //  SceneDelegate.swift
 //  PDFCreator
 //
-//  Created by ___ORGANIZATIONNAME___ on 2025/04/25.
+//  Created by oopers.com on 2025/04/25.
 //  
 //
 

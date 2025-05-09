@@ -92,6 +92,7 @@
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1630;
 				LastUpgradeCheck = 1630;
+				ORGANIZATIONNAME = oopers.com;
 				TargetAttributes = {
 					D7BEC54C2DBB1D700078AABC = {
 						CreatedOnToolsVersion = 16.3;

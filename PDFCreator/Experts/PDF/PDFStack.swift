@@ -83,9 +83,8 @@ extension PDF {
                     guard layout.anchors.contains(.leading),
                           layout.anchors.contains(.trailing)
                     else {continue}
-                    guard case .absolute(let heightUnits) = layout.container.size.height
-                    else {continue}
-                    var height = heightUnits.points(in: environment)
+                    var height = layout.container.size.height.heightValue(for: contentBounds.size, dpi: environment.dpi)
+                    guard !height.isNaN else {continue}
                     if height > contentBounds.height {
                         height = contentBounds.height
                     }
@@ -111,9 +110,8 @@ extension PDF {
                     guard layout.anchors.contains(.top),
                           layout.anchors.contains(.bottom)
                     else {continue}
-                    guard case .absolute(let widthUnits) = layout.container.size.width
-                    else {continue}
-                    var width = widthUnits.points(in: environment)
+                    var width = layout.container.size.width.widthValue(for: contentBounds.size, dpi: environment.dpi)
+                    guard !width.isNaN else {continue}
                     if width > contentBounds.width {
                         width = contentBounds.width
                     }

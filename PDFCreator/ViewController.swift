@@ -48,7 +48,7 @@ class ViewController: UIViewController {
         )
         let textSize = PDF.Dimension.Size(
             width: .relative(1.0),
-            height: .absolute(.point(26))
+            height: .absolute(.point(100/*26*/))
         )
         let font = UIFont.systemFont(ofSize: 20)
         let textFormat = NSLocalizedString("血圧レポート (年/月/日-年/月/日)", comment: "")
@@ -56,6 +56,7 @@ class ViewController: UIViewController {
             textFormat,
             font: font,
             alignment: .center,
+            //verticalAlignment: .bottom,
             size: textSize))
         let footerSize = PDF.Dimension.Size(
             width: .relative(1.0),

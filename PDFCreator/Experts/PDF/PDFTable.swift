@@ -31,29 +31,20 @@ extension PDF {
             super.init(direction: direction, size: size)
         }
         
-        /*
-        public override
-        func draw(into context: UIGraphicsPDFRendererContext, in environment: PDF.Environment) {
-            super.draw(into: context, in: environment)
-            for layout in contentLayouts {
-                let container = layout.container
-                guard let bounds = container.bounds else {continue}
-                context.stroke(bounds)
-            }
-        }
-         */
-
-        /*
-        public static
-        func rowBased(size: PDF.Dimension.Size) -> Table {
-            return Table(direction: .vertical, size: size)
+        public
+        func add(
+            _ content: PDF.Container,
+            fromEnd: Bool = false
+        ) {
+            super.add(content, borders: .all, fromEnd: fromEnd)
         }
         
-        public static
-        func columnBased(size: PDF.Dimension.Size) -> Table {
-            return Table(direction: .horizontal, size: size)
+        public
+        func fill(
+            _ content: PDF.Container
+        ) {
+            super.fill(content, borders: .all)
         }
-         */
     }
 }
 

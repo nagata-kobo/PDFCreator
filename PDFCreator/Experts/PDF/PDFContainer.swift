@@ -130,9 +130,24 @@ extension PDF.Container {
         }
     }
     
+    public struct Borders: OptionSet {
+        public let rawValue: Int
+        static let top = Borders(rawValue: 1 << 0)
+        static let bottom = Borders(rawValue: 1 << 1)
+        static let leading = Borders(rawValue: 1 << 2)
+        static let trailing = Borders(rawValue: 1 << 3)
+        
+        static let all: Borders = [.top, .bottom, .leading, .trailing]
+
+        public init(rawValue: Int) {
+            self.rawValue = rawValue
+        }
+    }
+    
     public class Layout {
         let container: PDF.Container
         var anchors: Anchors = []
+        var borders: Borders = []
         
         init(
             container: PDF.Container,
@@ -140,10 +155,12 @@ extension PDF.Container {
                 .top,
                 .leading,
                 .trailing,
-            ]
+            ],
+            borders: Borders = []
         ) {
             self.container = container
             self.anchors = anchors
+            self.borders = borders
         }
     }
 }

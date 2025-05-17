@@ -31,6 +31,7 @@ extension PDF {
         
         func add(
             _ content: PDF.Container,
+            borders: PDF.Container.Borders = [],
             fromEnd: Bool = false
         ) {
             content.parent = self
@@ -51,16 +52,21 @@ extension PDF {
             }
             let layout = Layout(
                 container: content,
-                anchors: anchors
+                anchors: anchors,
+                borders: borders
             )
             contentLayouts.append(layout)
         }
         
-        func fill(_ content: PDF.Container) {
+        func fill(
+            _ content: PDF.Container,
+            borders: PDF.Container.Borders = []
+        ) {
             content.parent = self
             let layout = Layout(
                 container: content,
-                anchors: [.top, .bottom, .leading, .trailing]
+                anchors: [.top, .bottom, .leading, .trailing],
+                borders: borders
             )
             contentLayouts.append(layout)
         }
@@ -75,8 +81,10 @@ extension PDF {
             print("***S", contentBounds)
             for layout in contentLayouts {
                 let content = layout.container
-                guard let bounds = content.bounds else {continue}
-                context.stroke(bounds)
+                if layout.borders == .all {
+                    guard let bounds = content.bounds else {continue}
+                    context.stroke(bounds)
+                }
                 environment.push(content)
                 content.draw(into: context, in: environment)
                 environment.pop()

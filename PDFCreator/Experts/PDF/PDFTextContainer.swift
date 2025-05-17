@@ -21,13 +21,13 @@ extension PDF {
         var textFlow = PDF.TextFlow(source: .init(""))
          */
         
-        private var text: String?
+        public var text: String?
         
-        private var font: UIFont?
+        public var font: UIFont?
         
-        private var alignment: NSTextAlignment?
+        public var alignment: NSTextAlignment?
         
-        private var verticalAlignment: VerticalAlignment = .middle
+        public var verticalAlignment: VerticalAlignment = .middle
         
         public init(
             _ text: String,
@@ -57,7 +57,7 @@ extension PDF {
         ) {
             fixContentBounds(in: environment)
             guard let contentBounds else {return}
-            print("***", contentBounds)
+            print("***T", text, contentBounds)
             let font = self.font ?? UIFont.systemFont(ofSize: 150)
             let attributes: [NSAttributedString.Key : Any] = [
                 .font: font,
@@ -65,9 +65,11 @@ extension PDF {
             ]
             let nsText = (text ?? "") as NSString
             nsText.draw(in: contentBounds, withAttributes: attributes)
+            /*
             //For debugging
             context.stroke(contentBounds)
             dump(contentBounds)
+             */
         }
         
         private func createParagraphStyle() -> NSParagraphStyle {

@@ -29,7 +29,7 @@ extension PDF.Table {
     }
      */
     public
-    class Row: PDF.Stack {
+    class Row: PDF.Table/*PDF.Stack*/ {
         
         public
         init(
@@ -38,6 +38,7 @@ extension PDF.Table {
             super.init(direction: .horizontal, size: size)
         }
         
+        /*
         public override
         func draw(into context: UIGraphicsPDFRendererContext, in environment: PDF.Environment) {
             super.draw(into: context, in: environment)
@@ -47,10 +48,11 @@ extension PDF.Table {
                 context.stroke(bounds)
             }
         }
+         */
     }
     
     public
-    class Column: PDF.Stack {
+    class Column: PDF.Table/*PDF.Stack*/ {
         
         public
         init(
@@ -58,6 +60,18 @@ extension PDF.Table {
         ) {
             super.init(direction: .vertical, size: size)
         }
+        
+        /*
+        public override
+        func draw(into context: UIGraphicsPDFRendererContext, in environment: PDF.Environment) {
+            super.draw(into: context, in: environment)
+            for layout in contentLayouts {
+                let container = layout.container
+                guard let bounds = container.bounds else {continue}
+                context.stroke(bounds)
+            }
+        }
+         */
     }
 }
 

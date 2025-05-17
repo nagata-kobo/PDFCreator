@@ -9,7 +9,7 @@
 import PDFKit
 
 extension PDF {
-    
+    /*
     class Table {
         
         var width: PDF.Dimension.Length
@@ -24,8 +24,41 @@ extension PDF {
             
         }
     }
+     */
+    public class Table: Stack {
+        
+        public override init(direction: PDF.Stack.Direction = .vertical, size: PDF.Dimension.Size) {
+            super.init(direction: direction, size: size)
+        }
+        
+        /*
+        public override
+        func draw(into context: UIGraphicsPDFRendererContext, in environment: PDF.Environment) {
+            super.draw(into: context, in: environment)
+            for layout in contentLayouts {
+                let container = layout.container
+                guard let bounds = container.bounds else {continue}
+                context.stroke(bounds)
+            }
+        }
+         */
+
+        /*
+        public static
+        func rowBased(size: PDF.Dimension.Size) -> Table {
+            return Table(direction: .vertical, size: size)
+        }
+        
+        public static
+        func columnBased(size: PDF.Dimension.Size) -> Table {
+            return Table(direction: .horizontal, size: size)
+        }
+         */
+    }
 }
 
+/*
 extension PDF.Table: PDF.Table.Cell {
     
 }
+*/

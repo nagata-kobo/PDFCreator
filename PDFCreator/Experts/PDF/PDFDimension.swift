@@ -117,6 +117,19 @@ extension PDF.Dimension.Length {
             return .nan
         }
     }
+    
+    public static func * (lhs: PDF.Dimension.Length, rhs: CGFloat) -> PDF.Dimension.Length {
+        switch lhs {
+        case .absolute(let unit):
+            return .absolute(unit * rhs)
+        case .relative(let ratio):
+            return .relative(ratio * rhs)
+        case .proportional(let factor):
+            return .proportional(factor * rhs)
+        case .flexible:
+            return .flexible
+        }
+    }
 }
 
 extension PDF.Dimension.Length.Unit {
@@ -138,5 +151,16 @@ extension PDF.Dimension.Length.Unit {
     
     public static func - (lhs: PDF.Dimension.Length.Unit, rhs: PDF.Dimension.Length.Unit) -> PDF.Dimension.Length.Unit {
         .pixel(lhs.pixels(dpi: 1800) - rhs.pixels(dpi: 1800), dpi: 1800)
+    }
+    
+    public static func * (lhs: PDF.Dimension.Length.Unit, rhs: CGFloat) -> PDF.Dimension.Length.Unit {
+        switch lhs {
+        case .pixel(let value, let _dpi):
+            return .pixel(value * rhs, dpi: _dpi)
+        case .millimeter(let millimeters):
+            return .millimeter(millimeters * rhs)
+        case .inch(let inches):
+            return .inch(inches * rhs)
+        }
     }
 }

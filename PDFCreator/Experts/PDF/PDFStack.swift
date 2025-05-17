@@ -10,9 +10,9 @@ import UIKit
 
 extension PDF {
     
-    class Stack: Container {
+    public class Stack: Container {
         
-        enum Direction {
+        public enum Direction {
             case vertical
             case horizontal
         }
@@ -56,6 +56,15 @@ extension PDF {
             contentLayouts.append(layout)
         }
         
+        func fill(_ content: PDF.Container) {
+            content.parent = self
+            let layout = Layout(
+                container: content,
+                anchors: [.top, .bottom, .leading, .trailing]
+            )
+            contentLayouts.append(layout)
+        }
+
         public override
         func draw(
             into context: UIGraphicsPDFRendererContext,
@@ -63,10 +72,11 @@ extension PDF {
         ) {
             fixContentBounds(in: environment)
             guard let contentBounds else {return}
-            print("***", contentBounds)
-            //TODO:
+            print("***S", contentBounds)
             for layout in contentLayouts {
                 let content = layout.container
+                guard let bounds = content.bounds else {continue}
+                context.stroke(bounds)
                 environment.push(content)
                 content.draw(into: context, in: environment)
                 environment.pop()
@@ -84,10 +94,15 @@ extension PDF {
                     guard layout.anchors.contains(.leading),
                           layout.anchors.contains(.trailing)
                     else {continue}
-                    var height = layout.container.size.height.heightValue(for: contentBounds.size, dpi: environment.dpi)
-                    guard !height.isNaN else {continue}
-                    if height > remainingBounds.height {
+                    var height: CGFloat
+                    if layout.anchors.contains(.top) && layout.anchors.contains(.bottom) {
                         height = remainingBounds.height
+                    } else {
+                        height = layout.container.size.height.heightValue(for: contentBounds.size, dpi: environment.dpi)
+                        guard !height.isNaN else {continue}
+                        if height > remainingBounds.height {
+                            height = remainingBounds.height
+                        }
                     }
                     let width = remainingBounds.width
                     let size = CGSize(width: width, height: height)
@@ -111,10 +126,15 @@ extension PDF {
                     guard layout.anchors.contains(.top),
                           layout.anchors.contains(.bottom)
                     else {continue}
-                    var width = layout.container.size.width.widthValue(for: contentBounds.size, dpi: environment.dpi)
-                    guard !width.isNaN else {continue}
-                    if width > contentBounds.width {
-                        width = contentBounds.width
+                    var width: CGFloat
+                    if layout.anchors.contains(.leading) && layout.anchors.contains(.trailing) {
+                        width = remainingBounds.width
+                    } else {
+                        width = layout.container.size.width.widthValue(for: contentBounds.size, dpi: environment.dpi)
+                        guard !width.isNaN else {continue}
+                        if width > remainingBounds.width {
+                            width = remainingBounds.width
+                        }
                     }
                     let height = remainingBounds.height
                     let size = CGSize(width: width, height: height)

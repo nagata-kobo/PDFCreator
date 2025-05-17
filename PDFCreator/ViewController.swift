@@ -56,7 +56,7 @@ class ViewController: UIViewController {
             textFormat,
             font: font,
             alignment: .center,
-            //verticalAlignment: .bottom,
+            //verticalAlignment: .top,
             size: textSize))
         let footerSize = PDF.Dimension.Size(
             width: .relative(1.0),
@@ -73,89 +73,12 @@ class ViewController: UIViewController {
             ),
             fromEnd: true
         )
-        /*
-        let lineHeigt: PDF.Dimension.Length = .absolute(.point(12))
-        let weeksSize = PDF.Dimension.Size(
-            width: .relative(1.0),
-            height: lineHeigt * 7 * 2 * 2
-        )
-        let weeksRow = PDF.Table.Row(size: weeksSize)
-        page.pageContent.add(weeksRow)
-         */
+
         let weekRows = createWeekRows()
         for weekRow in weekRows {
             page.pageContent.add(weekRow)
         }
-        let col1Size = PDF.Dimension.Size(
-            width: .relative(0.62),
-            height: .relative(1.0)
-        )
-        let col1 = PDF.Table.Column(size: col1Size)
-        /*
-        let col1 = PDF.TextContainer("2025-04-19 07:48:00", size: col1Size)
-        col1.font = UIFont.boldSystemFont(ofSize: 5)
-        col1.alignment = .center
-        row.add(col1)
-        let col2Size = PDF.Dimension.Size(
-            width: .relative(0.03),
-            height: .relative(1.0)
-        )
-        let col2 = PDF.TextContainer("☀️", size: col2Size)
-        col2.font = UIFont.boldSystemFont(ofSize: 5)
-        col2.alignment = .center
-        row.add(col2)
-        let col3Size = PDF.Dimension.Size(
-            width: .relative(0.1),
-            height: .relative(1.0)
-        )
-        let col3 = PDF.TextContainer("125", size: col3Size)
-        col3.font = UIFont.boldSystemFont(ofSize: 5)
-        col3.alignment = .center
-        row.add(col3)
-        let col4Size = PDF.Dimension.Size(
-            width: .relative(0.1),
-            height: .relative(1.0)
-        )
-        let col4 = PDF.TextContainer("75", size: col4Size)
-        col4.font = UIFont.boldSystemFont(ofSize: 5)
-        col4.alignment = .center
-        row.add(col2)
-        let col2Size = PDF.Dimension.Size(
-            width: .relative(0.03),
-            height: .relative(1.0)
-        )
-        let col2 = PDF.TextContainer("☀️", size: col2Size)
-        col2.font = UIFont.boldSystemFont(ofSize: 5)
-        col2.alignment = .center
-        row.add(col2)
-         */
-        let col3Size = PDF.Dimension.Size(
-            width: .relative(0.7),
-            height: .relative(1.0)
-        )
-        let col3 = PDF.Table.Column(size: col3Size)
-        let subrow3Size = PDF.Dimension.Size(
-            width: .relative(1.0),
-            height: .relative(0.5)
-        )
-        let subrow31 = PDF.Table.Row(size: subrow3Size)
-        let subcol3x1Size = PDF.Dimension.Size(
-            width: .relative(3.0/7.0),
-            height: .relative(1.0)
-        )
-        let subcol3x2Size = PDF.Dimension.Size(
-            width: .relative(4.0/7.0),
-            height: .relative(1.0)
-        )
-        let subcol3x1 = PDF.Table.Column(size: subcol3x1Size)
-        subrow31.add(subcol3x1)
-        col3.add(subrow31)
-        let subrow32 = PDF.Table.Row(size: subrow3Size)
-        col3.add(subrow32)
-        /*
-        row.add(col3)
-        page.pageContent.add(row)
-         */
+
         return [page]
     }
     

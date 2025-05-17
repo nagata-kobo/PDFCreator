@@ -17,9 +17,6 @@ extension PDF {
             case middle
             case bottom
         }
-        /*
-        var textFlow = PDF.TextFlow(source: .init(""))
-         */
         
         public var text: String?
         
@@ -57,14 +54,19 @@ extension PDF {
         ) {
             fixContentBounds(in: environment)
             guard let contentBounds else {return}
-            print("***T", text, contentBounds)
+            //print("***T", text, contentBounds)
             let font = self.font ?? UIFont.systemFont(ofSize: 150)
             let attributes: [NSAttributedString.Key : Any] = [
                 .font: font,
                 .paragraphStyle: createParagraphStyle(),
             ]
             let nsText = (text ?? "") as NSString
-            nsText.draw(in: contentBounds, withAttributes: attributes)
+            let textBounds = createTextBounds(
+                nsText,
+                with:  attributes,
+                in: contentBounds
+            )
+            nsText.draw(in: textBounds, withAttributes: attributes)
             /*
             //For debugging
             context.stroke(contentBounds)
@@ -77,21 +79,43 @@ extension PDF {
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.lineBreakMode = .byTruncatingTail
             paragraphStyle.alignment = alignment
-            //Adjust vertical alignment by modifying `minimumLineHeight`
-            paragraphStyle.minimumLineHeight = calculateMinimumLineHeight()
             return paragraphStyle
         }
-        
-        private func calculateMinimumLineHeight() -> CGFloat {
-            let fontHeight = font?.lineHeight ?? 0
-            let contentHeight = contentBounds?.height ?? 0
-            switch verticalAlignment {
-            case .top:
-                return fontHeight
-            case .middle:
-                return (contentHeight - fontHeight) / 2.0 + fontHeight
-            case .bottom:
-                return contentHeight
+
+        private func createTextBounds(
+            _ nsText: NSString,
+            with attributes: [NSAttributedString.Key : Any],
+            in contentBounds: CGRect
+        ) -> CGRect {
+            let size = nsText.size(withAttributes: attributes)
+            print("textSize of \(nsText):", size)
+            if size.height >= contentBounds.height {
+                return contentBounds
+            } else {
+                let dHeight = contentBounds.height - size.height
+                switch verticalAlignment {
+                case .top:
+                    return CGRect(
+                        x: contentBounds.origin.x,
+                        y: contentBounds.origin.y,
+                        width: contentBounds.size.width,
+                        height: size.height
+                    )
+                case .middle:
+                    return CGRect(
+                        x: contentBounds.origin.x,
+                        y: contentBounds.origin.y + dHeight / 2,
+                        width: contentBounds.size.width,
+                        height: size.height
+                    )
+                case .bottom:
+                    return CGRect(
+                        x: contentBounds.origin.x,
+                        y: contentBounds.origin.y + dHeight,
+                        width: contentBounds.size.width,
+                        height: size.height
+                    )
+                }
             }
         }
     }

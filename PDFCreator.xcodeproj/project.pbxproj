@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		D7BEC5AD2DD9949B0078AABC /* PDFGenerator in Frameworks */ = {isa = PBXBuildFile; productRef = D7BEC5AC2DD9949B0078AABC /* PDFGenerator */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		D7BEC54D2DBB1D700078AABC /* PDFCreator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PDFCreator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7BEC5AD2DD9949B0078AABC /* PDFGenerator in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +83,7 @@
 			);
 			name = PDFCreator;
 			packageProductDependencies = (
+				D7BEC5AC2DD9949B0078AABC /* PDFGenerator */,
 			);
 			productName = PDFCreator;
 			productReference = D7BEC54D2DBB1D700078AABC /* PDFCreator.app */;
@@ -108,6 +114,9 @@
 			);
 			mainGroup = D7BEC5442DBB1D700078AABC;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				D7BEC5AB2DD9949B0078AABC /* XCRemoteSwiftPackageReference "PDFGenerator" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D7BEC54E2DBB1D700078AABC /* Products */;
 			projectDirPath = "";
@@ -338,6 +347,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D7BEC5AB2DD9949B0078AABC /* XCRemoteSwiftPackageReference "PDFGenerator" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nagata-kobo/PDFGenerator.git";
+			requirement = {
+				kind = exactVersion;
+				version = 1.0.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D7BEC5AC2DD9949B0078AABC /* PDFGenerator */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D7BEC5AB2DD9949B0078AABC /* XCRemoteSwiftPackageReference "PDFGenerator" */;
+			productName = PDFGenerator;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D7BEC5452DBB1D700078AABC /* Project object */;
 }

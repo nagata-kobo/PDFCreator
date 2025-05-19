@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import PDFGenerator
 
 private
 let lineHeight: PDF.Dimension.Length = .absolute(.point(12))

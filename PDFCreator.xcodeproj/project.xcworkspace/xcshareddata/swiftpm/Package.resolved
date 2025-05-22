@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/nagata-kobo/PDFGenerator.git",
       "state" : {
-        "revision" : "ebcfa011b108ddb3586a1bf929559aee9dd36fe8",
-        "version" : "1.0.2"
+        "revision" : "40f959c3a6b09c4c943b0b7c8a66bd21ac716931",
+        "version" : "1.1.7"
       }
     }
   ],

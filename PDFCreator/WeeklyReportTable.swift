@@ -8,6 +8,7 @@
 
 import Foundation
 import PDFGenerator
+import UIKit
 
 private
 let lineHeight: PDF.Dimension.Length = .absolute(.point(12))
@@ -44,6 +45,7 @@ class WeeklyReportTable: PDF.Table {
             width: .absolute(.point(45)),
             height: lineHeight * 7 * 2 * 2
         )
+        /*
         let diastolicValues = """
         82.0
         
@@ -52,6 +54,39 @@ class WeeklyReportTable: PDF.Table {
         """
         let averageDiastolic = PDF.TextContainer(diastolicValues, size: weekAverageColumnSize)
         averageDiastolic.font = .systemFont(ofSize: 9)
+         */
+        let valueFont: UIFont = .systemFont(ofSize: 9)
+        let diastolicValues = NSMutableAttributedString()
+        diastolicValues.append(
+            NSAttributedString(
+                string: "82.0",
+                attributes: [
+                    .font: valueFont
+                ]
+            )
+        )
+        diastolicValues.append(
+            NSAttributedString(
+                string: "\n\n85.3",
+                attributes: [
+                    .font: valueFont,
+                    .foregroundColor: UIColor.red
+                ]
+            )
+        )
+        diastolicValues.append(
+            NSAttributedString(
+                string: "\n78.7",
+                attributes: [
+                    .font: valueFont,
+                    .foregroundColor: UIColor.blue
+                ]
+            )
+        )
+        let averageDiastolic = PDF.TextContainer(
+            attributedText: diastolicValues,
+            size: weekAverageColumnSize
+        )
         averageDiastolic.alignment = .center
         self.add(averageDiastolic, fromEnd: true)
         let systolicValues = """
@@ -121,7 +156,7 @@ class WeeklyReportTable: PDF.Table {
         let diastolicAverage = PDF.TextContainer("99.5", size: dayOrNightAverageSize)
         diastolicAverage.font = .systemFont(ofSize: 9)
         diastolicAverage.alignment = .center
-        dayOrNightRow.add(diastolicAverage, fromEnd: true)
+        dayOrNightRow.add(diastolicAverage, backgroundColor: .lightGray, fromEnd: true)
         let systolicAverage = PDF.TextContainer("999.0", size: dayOrNightAverageSize)
         systolicAverage.font = .systemFont(ofSize: 9)
         systolicAverage.alignment = .center
@@ -181,6 +216,7 @@ class WeeklyReportTable: PDF.Table {
         comment.leftPadding = .absolute(.point(5))
         comment.rightPadding = .absolute(.point(5))
         comment.font = .systemFont(ofSize: 9)
+        comment.color = .magenta
         comment.alignment = .left
         sampleRow.fill(comment)
         return sampleRow
